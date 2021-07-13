@@ -23,7 +23,7 @@ public class UserController {
     public ResponseEntity<?> insertUser( @RequestBody User user) {
         User userWithThisEmail = userRepository.findByEmail(user.getEmail());
         if(userWithThisEmail != null){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Email is linked to an already existing account", HttpStatus.CONFLICT);
         }
         user.setId(UUID.randomUUID().toString());
         User newUser = userRepository.save(user);
