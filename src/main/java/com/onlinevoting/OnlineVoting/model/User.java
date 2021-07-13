@@ -12,17 +12,19 @@ public class User {
     private String password;
     private String firstname;
     private String lastname;
+    private String JWT;
 
 
     public User() {
     }
 
 
-    public User(String email, String password, String firstname, String lastname) {
+    public User(String email, String password, String firstname, String lastname, String JWT) {
         this.email = email;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.JWT = JWT;
     }
 
 
@@ -64,6 +66,14 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getJWT() {
+        return this.JWT;
+    }
+
+    public void setJWT(String JWT) {
+        this.JWT = JWT;
     }
 
 }
