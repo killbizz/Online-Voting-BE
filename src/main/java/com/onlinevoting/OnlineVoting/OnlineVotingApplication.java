@@ -1,5 +1,6 @@
 package com.onlinevoting.OnlineVoting;
 
+import com.onlinevoting.OnlineVoting.model.Admin;
 import com.onlinevoting.OnlineVoting.model.User;
 
 import org.springframework.boot.SpringApplication;
@@ -18,5 +19,6 @@ public class OnlineVotingApplication implements RepositoryRestConfigurer {
 	@Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         config.exposeIdsFor(User.class);
+		config.exposeIdsFor(Admin.class);
     }
 }

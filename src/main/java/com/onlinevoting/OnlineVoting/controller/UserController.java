@@ -28,7 +28,7 @@ public class UserController {
         }
         user.setId(UUID.randomUUID().toString());
         // JWT with no expiration (I HOPE)
-        user.setJWT(JWT.createJWT(user.getId(), "JJWT", user.getId(), 0));
+        user.setJWT(JWT.createJWT(user.getId(), "user", user.getId(), 0));
         User newUser = userRepository.save(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
