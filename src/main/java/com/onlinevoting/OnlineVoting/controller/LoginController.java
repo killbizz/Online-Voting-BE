@@ -33,7 +33,7 @@ public class LoginController {
         }
         Admin admin = adminRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if(admin != null){
-            String token = JWT.createJWT(admin.getId(), "admin", admin.getId(), 0);
+            String token = JWT.createJWT(admin.getId().toString(), "admin", admin.getId().toString(), 0);
             return new ResponseEntity<>(new Identity(token, "admin") , HttpStatus.OK);
         }
         return new ResponseEntity<>("Authentication Failed", HttpStatus.UNAUTHORIZED);

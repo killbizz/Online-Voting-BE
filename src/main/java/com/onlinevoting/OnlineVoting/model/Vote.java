@@ -1,13 +1,19 @@
 package com.onlinevoting.OnlineVoting.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Vote {
 
+    @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
     private String userId;
     private long partyId;
+    private long electionId;
 
 
     public Vote() {
@@ -41,6 +47,14 @@ public class Vote {
 
     public void setPartyId(long partyId) {
         this.partyId = partyId;
+    }
+
+    public long getElectionId() {
+        return this.electionId;
+    }
+
+    public void setElectionId(long electionId) {
+        this.electionId = electionId;
     }
 
     

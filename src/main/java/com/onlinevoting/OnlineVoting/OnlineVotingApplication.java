@@ -1,7 +1,10 @@
 package com.onlinevoting.OnlineVoting;
 
 import com.onlinevoting.OnlineVoting.model.Admin;
+import com.onlinevoting.OnlineVoting.model.Election;
+import com.onlinevoting.OnlineVoting.model.Party;
 import com.onlinevoting.OnlineVoting.model.User;
+import com.onlinevoting.OnlineVoting.model.Vote;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,5 +23,8 @@ public class OnlineVotingApplication implements RepositoryRestConfigurer {
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         config.exposeIdsFor(User.class);
 		config.exposeIdsFor(Admin.class);
+		config.exposeIdsFor(Vote.class);
+		config.exposeIdsFor(Election.class);
+		config.exposeIdsFor(Party.class);
     }
 }

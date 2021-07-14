@@ -8,6 +8,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "party", path = "party")
 public interface PartyRepository extends CrudRepository<Party,Long> {
 
-    Party findById(long id);
+    Party findById(Integer id);
 
 }

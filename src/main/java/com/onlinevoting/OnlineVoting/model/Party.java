@@ -2,6 +2,7 @@ package com.onlinevoting.OnlineVoting.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
@@ -9,8 +10,8 @@ import javax.persistence.Lob;
 public class Party {
     
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String candidate;
     @Lob
@@ -20,18 +21,18 @@ public class Party {
     public Party() {
     }
 
-    public Party(long id, String name, String candidate, String base64logo) {
+    public Party(Long id, String name, String candidate, String base64logo) {
         this.id = id;
         this.name = name;
         this.candidate = candidate;
         this.base64logo = base64logo;
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

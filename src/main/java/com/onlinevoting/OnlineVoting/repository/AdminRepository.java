@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "admin", path = "admin")
-public interface AdminRepository extends CrudRepository<Admin,String> {
+public interface AdminRepository extends CrudRepository<Admin,Long> {
 
     Admin findByEmail(String email);
 
