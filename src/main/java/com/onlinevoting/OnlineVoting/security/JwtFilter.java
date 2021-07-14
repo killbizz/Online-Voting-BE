@@ -30,32 +30,36 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException,
         ServletException {
-        // capturing the response from the controller
-        CustomResponseWrapper capturingResponseWrapper = new CustomResponseWrapper(response);
-        filterChain.doFilter(request, capturingResponseWrapper);
-        // not filter GET requests
-        if(request.getMethod() != "GET"){
-            try {
-                String jwt = this.resolveToken(request);
-                JWT.decodeJWT(jwt);
-                // if the JWT validation is ok continue with the chain
-                filterChain.doFilter(request, response);
-            } catch (Exception e) {
-                // else modify the response
-                String exception = "Security exception: " + e.getMessage();
-                ErrorResponse errorResponse = new ErrorResponse();
-                errorResponse.setCode(401);
-                errorResponse.setMessage(exception);
+        try{
+            // capturing the response from the controller
+            CustomResponseWrapper capturingResponseWrapper = new CustomResponseWrapper(response);
+            filterChain.doFilter(request, capturingResponseWrapper);
+            // not filter GET requests
+            if(request.getMethod() != "GET"){
+                try {
+                    String jwt = this.resolveToken(request);
+                    JWT.decodeJWT(jwt);
+                    // if the JWT validation is ok continue with the chain
+                    filterChain.doFilter(request, response);
+                } catch (Exception e) {
+                    // else modify the response
+                    String exception = "Security exception: " + e.getMessage();
+                    ErrorResponse errorResponse = new ErrorResponse();
+                    errorResponse.setCode(401);
+                    errorResponse.setMessage(exception);
 
-                byte[] responseToSend = restResponseBytes(errorResponse);
-                ((HttpServletResponse) response).setHeader("Content-Type", "application/json");
-                ((HttpServletResponse) response).setStatus(401);
-                response.setContentLength(responseToSend.length);
-                response.getOutputStream().write(responseToSend);
-                return;
+                    byte[] responseToSend = restResponseBytes(errorResponse);
+                    ((HttpServletResponse) response).setHeader("Content-Type", "application/json");
+                    ((HttpServletResponse) response).setStatus(401);
+                    response.setContentLength(responseToSend.length);
+                    response.getOutputStream().write(responseToSend);
+                    return;
+                }
             }
+            filterChain.doFilter(request, response);
+        } catch (Exception e) {
+            System.out.println("\n \n" + e.getMessage() + "\n \n");
         }
-        filterChain.doFilter(request, response);
     }
 
     private String resolveToken(HttpServletRequest request) {
@@ -77,6 +81,9 @@ public class JwtFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         excludeUrlPatterns.add("/login/**");
         excludeUrlPatterns.add("/user/**");
+        excludeUrlPatterns.add("/admin/**");
+        excludeUrlPatterns.add("/party/**");
+        excludeUrlPatterns.add("/vote/**");
         return excludeUrlPatterns.stream()
             .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
     }
