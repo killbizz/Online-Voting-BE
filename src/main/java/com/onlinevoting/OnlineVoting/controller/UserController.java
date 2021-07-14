@@ -3,7 +3,6 @@ package com.onlinevoting.OnlineVoting.controller;
 import java.util.UUID;
 
 import com.onlinevoting.OnlineVoting.dto.ErrorResponse;
-import com.onlinevoting.OnlineVoting.lib.JWT;
 import com.onlinevoting.OnlineVoting.model.User;
 import com.onlinevoting.OnlineVoting.repository.UserRepository;
 
