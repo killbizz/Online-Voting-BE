@@ -1,52 +1,59 @@
 package com.onlinevoting.OnlineVoting.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onlinevoting.OnlineVoting.dto.ErrorResponse;
 import com.onlinevoting.OnlineVoting.lib.JWT;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import io.jsonwebtoken.JwtException;
-import net.minidev.json.JSONObject;
+import org.springframework.web.filter.*;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    @Override
-    public void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response,
-    final FilterChain filterChain) throws IOException,
-        ServletException {
-        try {
-            String jwt = this.resolveToken(request);
-            if (StringUtils.hasText(jwt)) {
-                JWT.decodeJWT(jwt);
-            }
-        } catch (JwtException je) {
-            String exception = "Security exception: " + je.getMessage();
-            // response.setContentLength(exception.length());
-            // response.getWriter().write(exception);
-            // response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            // response.flushBuffer();
-            ErrorResponse errorResponse = new ErrorResponse();
-            errorResponse.setCode(401);
-            errorResponse.setMessage(exception);
+    Collection<String> excludeUrlPatterns = new ArrayList<>();
+    AntPathMatcher pathMatcher = new AntPathMatcher();
 
-            byte[] responseToSend = restResponseBytes(errorResponse);
-            ((HttpServletResponse) response).setHeader("Content-Type", "application/json");
-            ((HttpServletResponse) response).setStatus(401);
-            response.getOutputStream().write(responseToSend);
-            return;
+    @Override
+    public void destroy() { }    
+
+    @Override
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException,
+        ServletException {
+        // capturing the response from the controller
+        CustomResponseWrapper capturingResponseWrapper = new CustomResponseWrapper(response);
+        filterChain.doFilter(request, capturingResponseWrapper);
+        // not filter GET requests
+        if(request.getMethod() != "GET"){
+            try {
+                String jwt = this.resolveToken(request);
+                JWT.decodeJWT(jwt);
+                // if the JWT validation is ok continue with the chain
+                filterChain.doFilter(request, response);
+            } catch (Exception e) {
+                // else modify the response
+                String exception = "Security exception: " + e.getMessage();
+                ErrorResponse errorResponse = new ErrorResponse();
+                errorResponse.setCode(401);
+                errorResponse.setMessage(exception);
+
+                byte[] responseToSend = restResponseBytes(errorResponse);
+                ((HttpServletResponse) response).setHeader("Content-Type", "application/json");
+                ((HttpServletResponse) response).setStatus(401);
+                response.setContentLength(responseToSend.length);
+                response.getOutputStream().write(responseToSend);
+                return;
+            }
         }
         filterChain.doFilter(request, response);
     }
@@ -60,8 +67,18 @@ public class JwtFilter extends OncePerRequestFilter {
         return null;
     }
 
+    // serialize the modified response in order to send to the client
     private byte[] restResponseBytes(ErrorResponse eErrorResponse) throws IOException {
         String serialized = new ObjectMapper().writeValueAsString(eErrorResponse);
         return serialized.getBytes();
     }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        excludeUrlPatterns.add("/login/**");
+        excludeUrlPatterns.add("/sign-up/**");
+        return excludeUrlPatterns.stream()
+            .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
+    }
+
 }
