@@ -76,7 +76,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         excludeUrlPatterns.add("/login/**");
-        excludeUrlPatterns.add("/sign-up/**");
+        excludeUrlPatterns.add("/user/**");
         return excludeUrlPatterns.stream()
             .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
     }
