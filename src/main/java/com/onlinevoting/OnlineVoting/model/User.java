@@ -10,19 +10,17 @@ public class User {
     private String id;
     private String email;
     private String password;
-    private String firstname;
-    private String lastname;
+    private String username;
 
 
     public User() {
     }
 
 
-    public User(String email, String password, String firstname, String lastname) {
+    public User(String email, String password, String firstname, String username) {
         this.email = email;
         this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.username = username;
     }
 
 
@@ -50,21 +48,14 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return this.firstname;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastname() {
-        return this.lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
 
 }
 
