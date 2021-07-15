@@ -84,6 +84,7 @@ public class JwtFilter extends OncePerRequestFilter {
         excludeUrlPatterns.add("/admin/**");
         excludeUrlPatterns.add("/party/**");
         excludeUrlPatterns.add("/vote/**");
+        excludeUrlPatterns.add("/election/**");
         return excludeUrlPatterns.stream()
             .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
     }
