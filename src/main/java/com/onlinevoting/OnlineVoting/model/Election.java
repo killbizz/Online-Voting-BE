@@ -1,5 +1,6 @@
 package com.onlinevoting.OnlineVoting.model;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -19,6 +20,8 @@ public class Election {
     private long id;
     private String name;
     private String type;
+    private Date startDate;
+    private Date endDate;
     @ElementCollection
     @CollectionTable(name = "parties", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "party")
@@ -64,6 +67,22 @@ public class Election {
         this.type = type;
     }
 
+    public Date getStartDate() {
+        return this.startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public List<Long> getParties() {
         return this.parties;
     }
@@ -78,7 +97,5 @@ public class Election {
 
     public void setVotes(List<Long> votes) {
         this.votes = votes;
-    }
-
-    
+    } 
 }
