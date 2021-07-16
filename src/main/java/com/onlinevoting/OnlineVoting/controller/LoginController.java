@@ -1,6 +1,7 @@
 package com.onlinevoting.OnlineVoting.controller;
 
 import com.onlinevoting.OnlineVoting.dto.Credential;
+import com.onlinevoting.OnlineVoting.dto.ErrorResponse;
 import com.onlinevoting.OnlineVoting.dto.Identity;
 import com.onlinevoting.OnlineVoting.lib.JWT;
 import com.onlinevoting.OnlineVoting.model.Admin;
@@ -36,7 +37,7 @@ public class LoginController {
             String token = JWT.createJWT(admin.getId().toString(), "admin", admin.getId().toString(), 0);
             return new ResponseEntity<>(new Identity(token, "admin") , HttpStatus.OK);
         }
-        return new ResponseEntity<>("Authentication Failed", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorResponse(401,"Authentication Failed!"), HttpStatus.UNAUTHORIZED);
     }
     
 }
