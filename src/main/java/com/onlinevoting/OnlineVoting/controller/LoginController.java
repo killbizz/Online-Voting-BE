@@ -30,12 +30,12 @@ public class LoginController {
         User registeredUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if(registeredUser != null){
             String token = JWT.createJWT(registeredUser.getId(), "user", registeredUser.getId(), 0);
-            return new ResponseEntity<>(new Identity(token, "user") , HttpStatus.OK);
+            return new ResponseEntity<>(new Identity(token, "user", registeredUser.getId()) , HttpStatus.OK);
         }
         Admin admin = adminRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if(admin != null){
             String token = JWT.createJWT(admin.getId().toString(), "admin", admin.getId().toString(), 0);
-            return new ResponseEntity<>(new Identity(token, "admin") , HttpStatus.OK);
+            return new ResponseEntity<>(new Identity(token, "admin", admin.getId().toString()) , HttpStatus.OK);
         }
         return new ResponseEntity<>(new ErrorResponse(401,"Authentication Failed!"), HttpStatus.UNAUTHORIZED);
     }

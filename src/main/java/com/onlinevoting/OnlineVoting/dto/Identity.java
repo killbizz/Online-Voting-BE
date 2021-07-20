@@ -4,14 +4,16 @@ public class Identity {
 
     private String jwtToken;
     private String role;
+    private String userId;
 
 
     public Identity() {
     }
 
-    public Identity(String jwtToken, String role) {
+    public Identity(String jwtToken, String role, String userId) {
         this.jwtToken = jwtToken;
         this.role = role;
+        this.userId = userId;
     }
 
     public String getJwtToken() {
@@ -28,6 +30,14 @@ public class Identity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     
