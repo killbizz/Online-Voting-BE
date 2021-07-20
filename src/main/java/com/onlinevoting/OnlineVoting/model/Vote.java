@@ -1,5 +1,7 @@
 package com.onlinevoting.OnlineVoting.model;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,7 @@ public class Vote {
     private String userId;
     private long partyId;
     private long electionId;
+    private Date date;
 
 
     public Vote() {
@@ -55,6 +58,14 @@ public class Vote {
 
     public void setElectionId(long electionId) {
         this.electionId = electionId;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     
