@@ -21,7 +21,7 @@ public class CorsFilter extends OncePerRequestFilter {
                                     final FilterChain filterChain) throws ServletException, IOException {
         try{
             // resources for Angular front-end origin
-            response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+            // response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
             // resources for React front-end origin
             response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
             response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH, HEAD, OPTIONS");
