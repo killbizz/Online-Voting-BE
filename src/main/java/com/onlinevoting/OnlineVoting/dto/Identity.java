@@ -2,7 +2,7 @@ package com.onlinevoting.OnlineVoting.dto;
 
 public class Identity {
 
-    private String jwtToken;
+    private String username;
     private String role;
     private String userId;
 
@@ -10,18 +10,18 @@ public class Identity {
     public Identity() {
     }
 
-    public Identity(String jwtToken, String role, String userId) {
-        this.jwtToken = jwtToken;
+    public Identity(String username, String role, String userId) {
+        this.username = username;
         this.role = role;
         this.userId = userId;
     }
 
-    public String getJwtToken() {
-        return this.jwtToken;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getRole() {

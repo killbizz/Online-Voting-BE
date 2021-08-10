@@ -3,7 +3,7 @@ package com.onlinevoting.OnlineVoting.controller;
 import com.onlinevoting.OnlineVoting.dto.Credential;
 import com.onlinevoting.OnlineVoting.dto.ErrorResponse;
 import com.onlinevoting.OnlineVoting.dto.Identity;
-import com.onlinevoting.OnlineVoting.lib.JWT;
+// import com.onlinevoting.OnlineVoting.lib.JWT;
 import com.onlinevoting.OnlineVoting.model.Admin;
 import com.onlinevoting.OnlineVoting.model.User;
 import com.onlinevoting.OnlineVoting.repository.AdminRepository;
@@ -29,13 +29,13 @@ public class LoginController {
     public ResponseEntity<?> login( @RequestBody Credential user) {
         User registeredUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if(registeredUser != null){
-            String token = JWT.createJWT(registeredUser.getId(), "user", registeredUser.getId(), 0);
-            return new ResponseEntity<>(new Identity(token, "user", registeredUser.getId()) , HttpStatus.OK);
+            // String token = JWT.createJWT(registeredUser.getId(), "user", registeredUser.getId(), 0);
+            return new ResponseEntity<>(new Identity(registeredUser.getUsername(), "user", registeredUser.getId()) , HttpStatus.OK);
         }
         Admin admin = adminRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if(admin != null){
-            String token = JWT.createJWT(admin.getId().toString(), "admin", admin.getId().toString(), 0);
-            return new ResponseEntity<>(new Identity(token, "admin", admin.getId().toString()) , HttpStatus.OK);
+            // String token = JWT.createJWT(admin.getId().toString(), "admin", admin.getId().toString(), 0);
+            return new ResponseEntity<>(new Identity(admin.getEmail(), "admin", admin.getId().toString()) , HttpStatus.OK);
         }
         return new ResponseEntity<>(new ErrorResponse(401,"Authentication Failed!"), HttpStatus.UNAUTHORIZED);
     }
