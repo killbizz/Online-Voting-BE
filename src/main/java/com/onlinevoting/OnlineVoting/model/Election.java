@@ -11,36 +11,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "election")
 public class Election {
 
     @Id
+    @Column(nullable = false) 
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false) 
     private String name;
+    @Column(nullable = false) 
     private String type;
+    @Column(nullable = false) 
     private Date startDate;
+    @Column(nullable = false) 
     private Date endDate;
     @ElementCollection
     @CollectionTable(name = "parties", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "party")
     private List<Long> parties;
-    @ElementCollection
-    @CollectionTable(name = "votes", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "vote")
-    private List<Long> votes;
-
 
     public Election() {
     }
 
-    public Election(long id, String name, String type, List<Long> parties, List<Long> votes) {
+    public Election(long id, String name, String type, List<Long> parties) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.parties = parties;
-        this.votes = votes;
     }
 
     public long getId() {
@@ -90,12 +91,4 @@ public class Election {
     public void setParties(List<Long> parties) {
         this.parties = parties;
     }
-
-    public List<Long> getVotes() {
-        return this.votes;
-    }
-
-    public void setVotes(List<Long> votes) {
-        this.votes = votes;
-    } 
 }
