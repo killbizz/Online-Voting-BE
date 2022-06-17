@@ -5,11 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Credential {
-    
-    private String email;
-    private String password;
+@AllArgsConstructor
+public class RoleToUserDTO {
 
+    private String role;
+    private String userEmail;
+    
 }
