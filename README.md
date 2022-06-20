@@ -2,9 +2,9 @@
 [![HitCount](https://hits.dwyl.com/killbizz/Online-Voting-BE.svg?style=flat-square)](http://hits.dwyl.com/killbizz/Online-Voting-BE)
 [![MIT License][license-shield]][license-url]
 
-Backend module repository of the student internship project made up for Sync Lab company using Nextjs framework.
+Backend module repository of the student internship project made up for Sync Lab company using Java Spring framework.
 
-This software consists of a Springboot application, which offers *REST web services*.
+This software consists of a SpringBoot application, which offers *REST web services*.
 
 The JWT authentication and authorization flow (refresh token included) is configured using Spring Security.
 
